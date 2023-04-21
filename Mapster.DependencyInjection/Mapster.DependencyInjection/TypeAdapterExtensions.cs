@@ -13,10 +13,15 @@ namespace Mapster
 
         public static TService GetService<TService>(this MapContext context)
         {
+            return (TService)context.GetService(typeof(TService));
+        }
+        
+        public static object GetService(this MapContext context, Type type)
+        {
             var sp = (IServiceProvider) context?.Parameters.GetValueOrDefault(ServiceMapper.DI_KEY);
             if (sp == null)
                 throw new InvalidOperationException("Mapping must be called using ServiceAdapter");
-            return (TService)sp.GetService(typeof(TService));
+            return sp.GetService(type);
         }
     }
 }
