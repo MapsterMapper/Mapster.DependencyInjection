@@ -28,6 +28,10 @@ namespace Mapster.DependencyInjection.Tests
                 var poco = new Poco {Id = "bar"};
                 var dto = mapper.Map<Poco, Dto>(poco);
                 dto.Name.ShouldBe("foo");
+
+                mapper = (IMapper)scope.ServiceProvider.GetService(typeof(IMapper));
+                dto = mapper.Map<Poco, Dto>(poco);
+                dto.Name.ShouldBe("foo");
             }
         }
 
@@ -49,6 +53,10 @@ namespace Mapster.DependencyInjection.Tests
                 var mapper = scope.ServiceProvider.GetService<IMapper>();
                 var poco = new Poco {Id = "bar"};
                 var dto = mapper.Map<Poco, Dto>(poco);
+                dto.Name.ShouldBe("foo");
+
+                mapper = scope.ServiceProvider.GetService<IMapper>();
+                dto = mapper.Map<Poco, Dto>(poco);
                 dto.Name.ShouldBe("foo");
             }
         }
